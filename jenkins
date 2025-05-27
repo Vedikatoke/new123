@@ -1,0 +1,35 @@
+pipeline {
+    agent any
+    
+    stages {
+        stage('Checkout') {
+            steps {
+                // Checkout the code from the configured branch
+                checkout scm
+            }
+        }
+        
+        stage('Build') {
+            steps {
+                // Example build command, adjust for your project
+                sh './build.sh' // or 'mvn clean install', 'npm install', etc.
+            }
+        }
+        
+        stage('Test') {
+            steps {
+                // Example test command
+                sh './test.sh' // or 'mvn test', 'npm test', etc.
+            }
+        }
+    }
+    
+    post {
+        success {
+            echo 'Build and tests succeeded!'
+        }
+        failure {
+            echo 'Build or tests failed!'
+        }
+    }
+}
